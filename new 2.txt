@@ -1,0 +1,28 @@
+int maximumScore(int* nums, int numsSize, int k) {
+    int max_score = 0;
+    int left = k, right = k;
+    int min_value = nums[k];
+    while (left >= 0 && right < numsSize) {
+        min_value = nums[left];
+        for (int i = left; i <= right; i++) {
+            min_value = (nums[i] < min_value) ? nums[i] : min_value;
+        }
+        int score = min_value * (right - left + 1);
+        if (score > max_score) {
+            max_score = score;
+        }
+        if (left > 0 && right < numsSize - 1) {
+            if (nums[left - 1] >= nums[right + 1]) {
+                left--;
+            } else {
+                right++;
+            }
+        } else if (left > 0) {
+            left--;
+        } else {
+            right++;
+        }
+    }
+
+    return max_score;
+}
